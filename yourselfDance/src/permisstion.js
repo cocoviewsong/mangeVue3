@@ -36,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
           await userStore.userInfo();
           next();
         } catch (error) {
-          userStore.userLogOut();
+          await userStore.userLogOut();
           // token过期  / 用户修改了本地存储
           next({ path: '/login', query: { redirect: to.path } });
         }

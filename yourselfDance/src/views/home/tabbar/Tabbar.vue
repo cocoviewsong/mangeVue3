@@ -106,8 +106,8 @@ function fullScreen() {
 }
 
 // 退出登录
-function logOut() {
-  userStore.userLogOut();
+async function logOut() {
+  await userStore.userLogOut();
   router.push({
     path: '/login',
     query: {

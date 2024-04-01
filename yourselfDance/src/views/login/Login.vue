@@ -91,9 +91,10 @@ async function login() {
 
   try {
     // 保证登录成功
-    await userStore.userLogin(loginForm.username, loginForm.password);
+    await userStore.userLogin(loginForm);
     // 2. 编程式导航跳转到首页
     let redirect = route.query.redirect;
+    console.log(redirect);
 
     router.push({ path: redirect || '/' });
 

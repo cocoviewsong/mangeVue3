@@ -21,18 +21,18 @@ let useUserStore = defineStore('User', {
   //   异步|逻辑
   actions: {
     // 用户登录的方法
-    async userLogin(username, password) {
+    async userLogin(data) {
       // 登录请求
-      let result = await reqLogin(username);
+      let result = await reqLogin(data);
       console.log(result);
+
       // 登录请求成功  200
-      if (result[0].password === password && result[0].username === username) {
+      if (result.code === 200) {
         // piana 存储 token
-        this.token = result[0].token;
-        console.log('密码正确');
+        this.token = result.data;
 
         // 本地存储
-        localStorage.setItem('TOKEN', JSON.stringify(result[0].token));
+        localStorage.setItem('TOKEN', JSON.stringify(result.data));
 
         // 保证当前async函数返回一个成功的promise
         return 'ok';
@@ -48,21 +48,30 @@ let useUserStore = defineStore('User', {
     async userInfo() {
       // 存储到仓库中
       let result = await reqUserInfo();
-      if (result[0].token) {
-        this.userName = result[0].username;
-        this.avatar = result[0].avatar;
+      console.log(result);
+
+      if (result.code === 200) {
+        this.userName = result.data.name;
+        this.avatar = result.data.avatar;
         return 'ok';
       } else {
-        return Promise.reject('获取用户信息失败');
+        return Promise.reject(new Error('错误'));
       }
     },
 
     // 退出登录 清空数据  本地 + pinia
-    userLogOut() {
-      this.token = '';
-      this.userName = '';
-      this.avatar = '';
-      localStorage.removeItem('TOKEN');
+    async userLogOut() {
+      let result = await reqLogout();
+      console.log(result);
+      if (result.code === 200) {
+        this.token = '';
+        this.userName = '';
+        this.avatar = '';
+        localStorage.removeItem('TOKEN');
+        return 'ok';
+      } else {
+        return Promise.reject(new Error('退出失败'));
+      }
     },
   },
   //   计算属性
