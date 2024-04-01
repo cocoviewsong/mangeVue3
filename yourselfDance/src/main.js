@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
+
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 // easy ___ 忽略 这个文件
 // @ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
-import App from '@/App.vue';
 
 // svg插件需要配置的代码
 import 'virtual:svg-icons-register';
@@ -13,6 +13,9 @@ import 'virtual:svg-icons-register';
 import '@/styles/index.scss';
 
 import router from './router';
+import App from '@/App.vue';
+// 引入路由鉴权
+import '@/permisstion.js';
 
 // 引入仓库
 import pinia from './stores';

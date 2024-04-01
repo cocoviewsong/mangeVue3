@@ -1,8 +1,8 @@
 <template>
-  <div>分页器全局组件</div>
+  <h1>spu管理99</h1>
 </template>
 
-<script setup name="Pagination">
+<script setup>
 import { ref, reactive } from 'vue';
 </script>
 

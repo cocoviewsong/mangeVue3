@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 
+// 引入仓库数据
+import useUserStore from '@/stores/modules/user.js';
+
 // 利用 axios对象的create方法,创建一个axios实例(其他配置:基础路径,超时时间)
 let request = axios.create({
   // 自己写的数据
@@ -12,8 +15,13 @@ let request = axios.create({
 
 // 给实例添加请求与响应拦截器
 
+let userStore;
 // 配置请求拦截器
 request.interceptors.request.use((config) => {
+  userStore = useUserStore();
+  if (userStore.token) {
+    config.headers.token = userStore.token;
+  }
   // config配置对象,headers属性---请求头,经常给服务器端携带公共参数
   // 返回配置对象
   return config;

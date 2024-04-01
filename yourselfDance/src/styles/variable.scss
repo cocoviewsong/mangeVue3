@@ -1,3 +1,26 @@
 // 项目提供 scss全局变量
 
 $base-color: #f7777f;
+
+// 页面滚动条颜色
+$scrollbar-color: #2668e2;
+
+/*********************** Home视图 **********************/
+// 左侧菜单宽度
+$base-menu-width: 260px;
+$base-menu-min-width: 50px;
+
+// 左侧菜单背景颜色
+$base-menu-background: #333;
+
+// 左侧菜单logo高度设置
+$base-menu-logo-height: 50px;
+
+// 左侧菜单logo右侧文字大小
+$base-logo-title-fontSize: 21px;
+
+// 顶部导航高度
+$base-tabbar-height: 60px;
+
+// 隐藏左侧导航栏动画时间
+$animation-time: 0.9s;

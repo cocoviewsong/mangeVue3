@@ -7,7 +7,7 @@ export function getTime() {
   } else if (hours >= 15 && hours <= 22) {
     message = '晚不睡';
   } else {
-    message = '给你一拳';
+    message = '你看看都几点了';
   }
   return message;
 }

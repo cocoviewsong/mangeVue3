@@ -8,7 +8,7 @@
   </svg>
 </template>
 
-<script setup>
+<script setup name="SvgIcon">
 // 接收父组件传递过来的参数
 defineProps({
   // xlink:href 属性值的前缀

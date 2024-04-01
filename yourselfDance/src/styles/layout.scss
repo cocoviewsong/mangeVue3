@@ -1,0 +1,7 @@
+// flex 居中布局
+@mixin flex-center($gap-value) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $gap-value;
+}

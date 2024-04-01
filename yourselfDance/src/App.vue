@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup name="App"></script>
 
 <style scoped lang="scss">
 .test {

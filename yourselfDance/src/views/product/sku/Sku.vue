@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>一级路由404</h1>
-  </div>
+  <h1>sku管理</h1>
 </template>
 
 <script setup>

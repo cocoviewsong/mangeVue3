@@ -1,10 +1,10 @@
 <template>
   <div class="login__container">
-    <ElRow>
+    <el-row>
       <!-- 屏幕宽度小于768 则左侧不占12 而是占0列 -->
-      <ElCol :span="7" :xs="0"></ElCol>
-      <ElCol :span="10" :xs="24">
-        <ElForm
+      <el-col :span="7" :xs="0"></el-col>
+      <el-col :span="10" :xs="24">
+        <el-form
           class="login__form"
           :model="loginForm"
           :rules="rules"
@@ -13,53 +13,48 @@
           <h1>Congratulations on finding here</h1>
           <h2>Welcome to the program</h2>
 
-          <ElFormItem prop="username">
-            <ElInput
+          <el-form-item prop="username">
+            <el-input
               :prefix-icon="User"
               type="text"
               v-model="loginForm.username"
-            ></ElInput>
-          </ElFormItem>
+            ></el-input>
+          </el-form-item>
 
-          <ElFormItem prop="password">
-            <ElInput
+          <el-form-item prop="password">
+            <el-input
               :prefix-icon="Lock"
               :show-password="true"
               type="password"
               v-model="loginForm.password"
-            ></ElInput>
-          </ElFormItem>
+            ></el-input>
+          </el-form-item>
 
-          <ElFormItem>
-            <ElButton
+          <el-form-item>
+            <el-button
               :loading="loading"
               type="primary"
               size="default"
               @click="login"
             >
               登录
-            </ElButton>
-          </ElFormItem>
-        </ElForm>
-      </ElCol>
-    </ElRow>
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup>
-import {
-  ElButton,
-  ElCol,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElRow,
-} from 'element-plus';
-import { User, Lock } from '@element-plus/icons-vue';
 import { ref, reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+
 import { ElNotification } from 'element-plus';
+import { User, Lock } from '@element-plus/icons-vue';
+
 import { getTime } from '@/utils/time.js';
+import useUserStore from '@/stores/modules/user.js';
 
 // 控制按钮加载效果
 let loading = ref(false);
@@ -69,9 +64,9 @@ let loginForms = ref();
 
 // 路由器
 let router = useRouter();
+let route = useRoute();
 
 // piana
-import useUserStore from '@/stores/modules/user.js';
 let userStore = useUserStore();
 
 // 收集账号与密码的数据
@@ -98,7 +93,9 @@ async function login() {
     // 保证登录成功
     await userStore.userLogin(loginForm.username, loginForm.password);
     // 2. 编程式导航跳转到首页
-    router.push('/');
+    let redirect = route.query.redirect;
+
+    router.push({ path: redirect || '/' });
 
     // 登录成功提示信息
     ElNotification({

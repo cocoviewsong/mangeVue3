@@ -2,7 +2,10 @@
 import { defineStore } from 'pinia';
 
 // 引入接口
-import { reqLogin } from '@/api/user';
+import { reqLogin, reqUserInfo } from '@/api/user';
+
+// 引入路由(常量路由)
+import { constantRoute } from '@/router/routes';
 
 // 创建用户小仓库
 let useUserStore = defineStore('User', {
@@ -10,6 +13,9 @@ let useUserStore = defineStore('User', {
   state: () => {
     return {
       token: localStorage.getItem('TOKEN') || '', // 用户唯一标识
+      menuRouter: constantRoute, // 仓库存储生成菜单需要的数组
+      userName: '',
+      avatar: '',
     };
   },
   //   异步|逻辑
@@ -21,8 +27,7 @@ let useUserStore = defineStore('User', {
       console.log(result);
       // 登录请求成功  200
       if (result[0].password === password && result[0].username === username) {
-        // piana 存储一下token
-        // 由于 pinia 其实利用 js 对象
+        // piana 存储 token
         this.token = result[0].token;
         console.log('密码正确');
 
@@ -37,6 +42,27 @@ let useUserStore = defineStore('User', {
         return Promise.reject(new Error('登录失败'));
       }
       // 登录请求失败  201
+    },
+
+    // 获取用户信息
+    async userInfo() {
+      // 存储到仓库中
+      let result = await reqUserInfo();
+      if (result[0].token) {
+        this.userName = result[0].username;
+        this.avatar = result[0].avatar;
+        return 'ok';
+      } else {
+        return Promise.reject('获取用户信息失败');
+      }
+    },
+
+    // 退出登录 清空数据  本地 + pinia
+    userLogOut() {
+      this.token = '';
+      this.userName = '';
+      this.avatar = '';
+      localStorage.removeItem('TOKEN');
     },
   },
   //   计算属性

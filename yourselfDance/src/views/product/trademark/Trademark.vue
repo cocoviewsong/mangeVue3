@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>展示登录成功后的数据</h1>
-  </div>
+  <h1>品牌管理</h1>
 </template>
 
 <script setup>

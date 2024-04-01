@@ -1,8 +1,8 @@
 <template>
-  <div>分页器全局组件</div>
+  <div>user</div>
 </template>
 
-<script setup name="Pagination">
+<script setup>
 import { ref, reactive } from 'vue';
 </script>
 
