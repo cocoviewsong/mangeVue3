@@ -24,7 +24,6 @@ let useUserStore = defineStore('User', {
     async userLogin(data) {
       // 登录请求
       let result = await reqLogin(data);
-      console.log(result);
 
       // 登录请求成功  200
       if (result.code === 200) {
@@ -48,7 +47,7 @@ let useUserStore = defineStore('User', {
     async userInfo() {
       // 存储到仓库中
       let result = await reqUserInfo();
-      console.log(result);
+      // console.log(result);
 
       if (result.code === 200) {
         this.userName = result.data.name;

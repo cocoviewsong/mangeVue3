@@ -8,10 +8,10 @@ import useUserStore from '@/stores/modules/user.js';
 // 利用 axios对象的create方法,创建一个axios实例(其他配置:基础路径,超时时间)
 let request = axios.create({
   // 自己写的数据
-  baseURL: 'http://rap2api.taobao.org/app/mock/317814',
+  // baseURL: 'http://rap2api.taobao.org/app/mock/317814',
   // baseURL: import.meta.env.VITE_APP_BASE_API,
 
-  // baseURL: 'http://sph-api.atguigu.cn',
+  baseURL: 'http://sph-api.atguigu.cn',
   timeout: 5000, // 超时限制
 });
 
