@@ -13,6 +13,8 @@ const API = {
   ATTR_URL: '/admin/product/attrInfoList/',
   // 添加/修改已有属性
   ADDOREDIT_URL: '/admin/product/saveAttrInfo',
+  // 删除属性
+  DeleteATTR_URL: '/admin/product/deleteAttr/',
 };
 
 // 获取一级分类接口方法
@@ -29,6 +31,8 @@ export const reqAttr = (category1Id, category2Id, category3Id) =>
   request.get(API.ATTR_URL + `${category1Id}/${category2Id}/${category3Id}`);
 
 // 新增/修改方法
-export const reqAddOrEditAttr = (data) => {
-  request.post(API.ADDOREDIT_URL, data);
-};
+export const reqAddOrEditAttr = (data) => request.post(API.ADDOREDIT_URL, data);
+
+// 删除属性
+export const reqRemoveAttr = (attrId) =>
+  request.delete(API.DeleteATTR_URL + attrId);
