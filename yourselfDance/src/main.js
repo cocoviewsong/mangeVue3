@@ -2,6 +2,9 @@ import { createApp } from 'vue';
 
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+// *暗黑模式需要的样式
+import 'element-plus/theme-chalk/dark/css-vars.css';
+
 // easy ___ 忽略 这个文件
 // @ts-ignore
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs';

@@ -36,6 +36,7 @@
       class="home__container__tabbar"
       :class="{ fold: homeStore.fold ? true : false }"
     >
+      <!-- //- 子组件导航栏 -->
       <Tabbar></Tabbar>
     </div>
 
@@ -49,7 +50,31 @@
           <component :is="Component" v-if="flag"></component>
         </Transition>
       </RouterView>
-      <p v-if="route.path === '/'">666</p>
+      <div v-if="route.path === '/'">
+        <el-card>
+          <div class="flexBox">
+            <img :src="userStore.avatar" alt="用户头像" />
+            <div>
+              <h2 style="color: #343a40; font-size: 24px; font-weight: 500">
+                {{ getTimeNormal() }}好,{{
+                  userStore.userName ? userStore.userName : 'admin(超级管理员)'
+                }}
+              </h2>
+              <p style="color: #868e96; font-size: 18px; font-weight: 500">
+                &mdash;&mdash;&mdash;&mdash;{{ setting.title }}
+              </p>
+            </div>
+          </div>
+        </el-card>
+        <div style="text-align: center; background-size: cover">
+          <SvgIcon
+            name="yahoo"
+            color="#333"
+            width="600px"
+            height="450px"
+          ></SvgIcon>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +87,7 @@ import { useRoute } from 'vue-router';
 import setting from '@/setting.js';
 import Menu from './menu/Menu.vue';
 import Tabbar from '@/views/home/tabbar/Tabbar.vue';
+import { getTimeNormal } from '@/utils/time.js';
 
 // 获取用户相关的小仓库数据
 import useUserStore from '@/stores/modules/user';
@@ -170,6 +196,21 @@ watch(
       width: calc(100vw - $base-menu-min-width);
       left: $base-menu-min-width;
     }
+  }
+}
+
+.flexBox {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 20px;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  h2 {
+    margin-bottom: 10px;
   }
 }
 

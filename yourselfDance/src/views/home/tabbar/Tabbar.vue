@@ -42,7 +42,15 @@
         :title="fullTitle"
       ></el-button>
 
-      <el-button icon="Operation" circle size="small" title="设置"></el-button>
+      <!-- //. 设置按钮 -->
+      <el-button
+        @click="homeStore.handlerThemeDisplay()"
+        icon="Operation"
+        circle
+        size="small"
+        title="设置"
+      ></el-button>
+
       <img :src="userStore.avatar" alt="用户头像" />
 
       <!-- 下拉菜单 -->
@@ -77,7 +85,7 @@ let fullTitle = ref('进入全屏');
 let homeStore = useHomeStore();
 let userStore = useUserStore();
 
-// 获取路由  通过 matched 属性能获取路由元信息
+// *获取路由  通过 matched 属性能获取路由元信息
 let route = useRoute();
 let router = useRouter();
 
@@ -85,12 +93,12 @@ function changeIcon() {
   homeStore.fold = !homeStore.fold;
 }
 
-// 进行页面刷新
+// *进行页面刷新
 function handlerReload() {
   homeStore.reload = !homeStore.reload;
 }
 
-// 全屏按钮(未处理兼容性)
+// *全屏按钮(未处理兼容性)
 function fullScreen() {
   // DOM对象的一个属性，可以用来判断全屏状态
   full = document.fullscreenElement;
@@ -105,7 +113,7 @@ function fullScreen() {
   }
 }
 
-// 退出登录
+// *退出登录
 async function logOut() {
   await userStore.userLogOut();
   router.push({

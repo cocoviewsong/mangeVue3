@@ -6,7 +6,13 @@ let useHomeStore = defineStore('SettingStore', {
     return {
       fold: false, // 控制左侧菜单是否折叠
       reload: false, // 控制刷新效果
+      drawer: false, // .控制主题设置的显示与隐藏
     };
+  },
+  actions: {
+    handlerThemeDisplay() {
+      this.drawer = !this.drawer;
+    },
   },
 });
 
