@@ -62,9 +62,6 @@ const changeDark = () => {
   let html = document.documentElement;
   dark.value ? (html.className = 'dark') : (html.className = '');
 };
-const changeDrawer = () => {
-  drawer.value = true;
-};
 </script>
 
 <style scoped lang="scss">

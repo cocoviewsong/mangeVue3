@@ -34,6 +34,20 @@ export const constantRoute = [
     },
   },
 
+  {
+    name: '404',
+    path: '/404',
+    component: () => import('@/views/404/404.vue'),
+    meta: {
+      title: '404',
+      hidden: true,
+      icon: 'HelpFilled',
+    },
+  },
+];
+
+// -异步路由
+export const asyncRoute = [
   // 权限管理模块
   {
     name: 'Acl',
@@ -133,17 +147,10 @@ export const constantRoute = [
       },
     ],
   },
+];
 
-  {
-    name: '404',
-    path: '/404',
-    component: () => import('@/views/404/404.vue'),
-    meta: {
-      title: '404',
-      hidden: true,
-      icon: 'HelpFilled',
-    },
-  },
+// -任意路由
+export const anyRoute = [
   {
     name: 'Any',
     path: '/:pathMatch(.*)*',

@@ -34,7 +34,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           await userStore.userInfo();
-          next();
+          next({ ...to });
         } catch (error) {
           // token过期  / 用户修改了本地存储
 
@@ -42,9 +42,8 @@ router.beforeEach(async (to, from, next) => {
             不知道为啥刷新会退出登录
           */
 
-          // await userStore.userLogOut();
-          // next({ path: '/login', query: { redirect: to.path } });
-          next();
+          await userStore.userLogOut();
+          next({ path: '/login', query: { redirect: to.path } });
         }
       }
     }

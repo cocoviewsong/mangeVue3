@@ -72,11 +72,23 @@
 
         <div class="center">
           <!-- 地图 -->
-          <div class="map">我最帅</div>
+          <div class="map" ref="map">我最帅</div>
           <!-- 折线图 -->
-          <div class="line-chart">w78456</div>
+          <div class="line-chart">
+            <div class="title">
+              未来七天游客数量趋势
+              <img src="./images/dataScreen-title.png" alt="" />
+            </div>
+            <div class="chartImg" ref="lineChart"></div>
+          </div>
         </div>
-        <div class="right">右边</div>
+
+        <!-- 右侧展示区 -->
+        <div class="right">
+          <Rank class="rank"></Rank>
+          <Year class="year"></Year>
+          <Couter class="couter"></Couter>
+        </div>
       </div>
     </div>
   </div>
@@ -87,32 +99,43 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import * as echarts from 'echarts';
+
+import Rank from './components/Rank.vue';
+import Year from './components/Year.vue';
+import Couter from './components/Couter.vue';
+
 // .水球图扩展插件
 import 'echarts-liquidfill';
+// .引入中国地图JSON数据
+import chinaJSON from './china.json';
 
 let people = ref('29511人');
 // -当前时间
 let time = ref(moment().format('YYYY年MM月DD日 HH:mm:ss'));
 let timer = ref(0);
 
-// !构建的时候需要复原
-// onMounted(() => {
-//   timer.value = setInterval(() => {
-//     time.value = moment().format('YYYY年MM月DD日 HH:mm:ss');
-//   }, 1000);
-// });
-// // .销毁计时器
-// onBeforeUnmount(() => {
-//   clearInterval(timer.value);
-// });
+onMounted(() => {
+  timer.value = setInterval(() => {
+    time.value = moment().format('YYYY年MM月DD日 HH:mm:ss');
+  }, 1000);
+});
+// .销毁计时器
+onBeforeUnmount(() => {
+  clearInterval(timer.value);
+});
 
 const router = useRouter();
+
+// -注册中国地图
+echarts.registerMap('china', chinaJSON);
 
 // -获取DOM元素
 const screen = ref(); //. 数据大屏
 const charts = ref(); //. 水球图
 const chartsGender = ref(); //. 比例图片
 const pieChart = ref(); //. 饼图
+const map = ref(); //. 地图
+const lineChart = ref(); //. 折线图
 // .缩放比例
 const getScale = (width = 1920, height = 1080) => {
   let newWidth = window.innerWidth / width;
@@ -248,6 +271,149 @@ onMounted(() => {
       top: 0,
       bottom: 0,
     },
+  });
+
+  // -地图
+  let myCharts4 = echarts.init(map.value);
+  myCharts4.setOption({
+    geo: [
+      {
+        map: 'china',
+        roam: true, //. 鼠标缩放的效果
+        zoom: 1.1,
+        // .地图位置的调试
+        top: 125,
+        right: 50,
+        bottom: 0,
+        left: 50,
+        // .地图上文字的设置
+        label: {
+          show: true,
+          color: '#fff',
+          fontSize: '14',
+        },
+        // .每一个多边形的样式
+        itemStyle: {
+          color: '#29fffc',
+          opacity: 0.6,
+        },
+        // .地图高亮效果
+        emphasis: {
+          itemStyle: {
+            color: '#f7777f',
+          },
+        },
+      },
+    ],
+    grid: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      right: 0,
+    },
+    series: [
+      {
+        type: 'lines',
+        data: [
+          {
+            coords: [
+              [116.405285, 39.904989],
+              [119.306239, 26.075302],
+            ],
+            lineStyle: {
+              color: '#fff',
+              width: '6',
+            },
+          },
+          {
+            coords: [
+              [112.549248, 37.857014],
+              [114.077429, 44.331087],
+            ],
+            lineStyle: {
+              color: '#fff',
+              width: '6',
+            },
+          },
+          {
+            coords: [
+              [112.982279, 28.19409],
+              [91.132212, 29.660361],
+            ],
+            lineStyle: {
+              color: '#fff',
+              width: '6',
+            },
+          },
+        ],
+        effect: {
+          show: true,
+          symbol: 'arrow',
+          color: '#333',
+          symbolSize: '20',
+        },
+      },
+    ],
+  });
+
+  // -折线图
+  let myCharts5 = echarts.init(lineChart.value);
+  myCharts5.setOption({
+    title: {
+      text: '访问量',
+    },
+    grid: {
+      top: 30,
+      right: 20,
+      bottom: 20,
+      left: 40,
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      splitLine: {
+        show: false,
+      },
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    },
+    yAxis: {
+      splitLine: {
+        show: false,
+      },
+      axisLine: {
+        show: true,
+      },
+      axisTick: {
+        show: true,
+      },
+    },
+    series: [
+      {
+        data: [150, 460, 224, 423, 135, 523, 260],
+        type: 'line',
+        smooth: true,
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: 'red', // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: 'blue', // 100% 处的颜色
+              },
+            ],
+            global: false, // 缺省为 false
+          },
+        },
+      },
+    ],
   });
 });
 </script>
@@ -461,18 +627,53 @@ onMounted(() => {
 
     .center {
       flex: 2;
+      display: flex;
+      flex-direction: column;
 
       .map {
-        background-color: #f77777;
+        flex: 4;
       }
 
       .line-chart {
-        background-color: #f77777;
+        flex: 1;
+        background: url('./images/dataScreen-main-cb.png') no-repeat;
+        background-size: 100% 100%;
+        margin: 0 10px 10px;
+
+        .title {
+          font-size: 20px;
+          margin-left: 15px;
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 5px;
+          img {
+            margin-top: 10px;
+            width: 68px;
+            height: 7px;
+          }
+        }
+
+        .chartImg {
+          height: calc(100% - 40px);
+        }
       }
     }
 
     .right {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .rank {
+        flex: 1;
+      }
+      .year {
+        flex: 1;
+      }
+      .couter {
+        flex: 1;
+      }
     }
   }
 }

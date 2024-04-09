@@ -23,6 +23,9 @@ import '@/permisstion.js';
 // 引入仓库
 import pinia from './stores';
 
+// -全局自定义指令
+import { isHasButton } from './directive/has';
+
 const app = createApp(App);
 
 app.use(ElementPlus, {
@@ -39,5 +42,7 @@ app.use(router);
 // console.log(import.meta.env);
 
 app.use(pinia);
+
+isHasButton(app);
 
 app.mount('#app');

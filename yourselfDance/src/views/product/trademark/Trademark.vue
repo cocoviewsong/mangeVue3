@@ -15,6 +15,7 @@
       type="warning"
       size="default"
       title="添加品牌"
+      v-has="`btn.Trademark.add`"
     >
       添加品牌
     </el-button>
